@@ -43,6 +43,7 @@ const Cours = () => {
                 time={cours.createdAt}
                 title={cours.title}
                 description={cours.description}
+                id={cours.id}
                 ></Cour>
             ))}
         </div>

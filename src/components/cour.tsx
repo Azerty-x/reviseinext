@@ -9,18 +9,30 @@ const Cour = ({auth, time, title, description, id}) => {
     const heartIcon = useRef(null)
 
     useEffect(() => {
+        const changeLike = async(state) => {
+            const req = await fetch("/api/cours", {
+                method:"PUT",
+                body: state ? JSON.stringify({
+                    id:id,
+                    likes:1,
+                    userLiked:auth
+                }) : JSON.stringify({
+                    id:id,
+                    likes:-1,
+                    userLiked:auth
+                })
+            }).then(data => data.json())
+            .then(response => {
+                console.log(response);
+            })
+        }
         if (liked === false) {
             heartIcon.current.style.color = "white"
-            const changeLike = async() => {
-                const req = await fetch("/api/cours", {
-                    method:"PUT",
-                    body:{
-                        id:id
-                    }
-                })
-            }
+            
+            changeLike(false)
         }else {
             heartIcon.current.style.color = "red"
+            changeLike(true)
         }
     }, [liked])
 

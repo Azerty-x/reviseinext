@@ -73,7 +73,7 @@ export async function PUT(req, res) {
                 description: description || cour.description,
                 content: content || cour.content,
                 likes: cour.likes+likes || cour.likes,
-                userLiked: userLiked !== undefined ? [...cour.userLiked, userLiked] : cour.userLiked
+                userLiked: userLiked !== undefined ? likes < 0 ? cour.userLiked.filter(item => item !== userLiked) : [...cour.userLiked, userLiked] : cour.userLiked
             }
             const update = await prisma.cours.update({
                 where: {
