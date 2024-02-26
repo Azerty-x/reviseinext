@@ -11,6 +11,7 @@ const Cours = () => {
     const page = searchParams.get('p')
 
     const [coursList, setCours] = useState([])
+    const [pageState, setPage] = useState(0)
 
     useEffect(() => {
         const getCours = async() => {
@@ -20,16 +21,29 @@ const Cours = () => {
             .then(data => data.json())
             .then(response => {
                 setCours(response.data)
+                setPage(Number(response.pages))
             })
         }
         getCours()
     }, [page])
+    let pages = []
+    for (let i = 1; i <= pageState ; i++) {
+        pages.push(
+            <div key={i} onClick={() => {router.push(`/cours?p=${i}`)}} className='bg-black text-white text-xl p-3 rounded-lg cursor-pointer m-5 w-1/5'>
+                <p>Page {i}</p>
+            </div>
+        )
+    }
 
     const changePage = (state:boolean) => {
         if (state === true) {
-            router.push(`/cours?p=${parseInt(page)-1}`)
+            if (page >= pageState) {
+                router.push(`/cours?p=${parseInt(page)-1}`)
+            }
         }else {
-            router.push(`/cours?p=${parseInt(page)+1}`)
+            if (page < pageState) {
+                router.push(`/cours?p=${parseInt(page)+1}`)
+            }
         }
     }
 
@@ -44,12 +58,15 @@ const Cours = () => {
                 title={cours.title}
                 description={cours.description}
                 id={cours.id}
+                likes={cours.likes}
                 ></Cour>
             ))}
         </div>
         
         <Button className='ml-auto' onClick={() => changePage(true)}>Précedent</Button>
+        {pages}
         <Button className='ml-auto' onClick={() => changePage(false)}>Suivant</Button>
+
     </div>
   )
 }

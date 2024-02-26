@@ -11,9 +11,10 @@ export async function GET(req, res){
 
     const total = await prisma.cours.count()
     
-    const skip = Math.max(0, total- (pagesize*pages))
+    const skip = Math.max(0, (pages - 1) * pagesize)
+    const totalPages = Math.ceil(total / pagesize);
     
-    
+
     if (id !== null) {
         try {
             const cours = await prisma.cours.findUniqueOrThrow({
@@ -30,7 +31,7 @@ export async function GET(req, res){
             skip:skip,
             take:pagesize
         })
-        return NextResponse.json({"ok":"true", "data":onePart.reverse()})
+        return NextResponse.json({"ok":"true", "pages":totalPages,"data":onePart.reverse()})
     }
 }
 
@@ -67,13 +68,15 @@ export async function PUT(req, res) {
     if (datetime === "21") {
         try {
             const cour = await prisma.cours.findUniqueOrThrow({where:{id:id}})
+            const like = likes === 0 ? -1 : 1
+            const newLikes = cour.likes+like === 0 ? 0 : cour.likes+like
             const updateData = {
                 id:id,
                 title: title || cour.title,
                 description: description || cour.description,
                 content: content || cour.content,
-                likes: cour.likes+likes || cour.likes,
-                userLiked: userLiked !== undefined ? likes < 0 ? cour.userLiked.filter(item => item !== userLiked) : [...cour.userLiked, userLiked] : cour.userLiked
+                likes: newLikes,
+                userLiked: userLiked !== undefined ? likes === 0 ? cour.userLiked.filter(item => item !== userLiked) : [...cour.userLiked, userLiked] : cour.userLiked
             }
             const update = await prisma.cours.update({
                 where: {

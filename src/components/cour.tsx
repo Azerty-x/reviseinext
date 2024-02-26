@@ -4,35 +4,58 @@ import { Heart } from 'lucide-react'
 import React, { useEffect, useRef, useState } from 'react'
 import "@/app/globals.css"
 
-const Cour = ({auth, time, title, description, id}) => {
+const Cour = ({auth, time, title, description, id, likes}) => {
     const [liked, setLiked] = useState(false)
+    const [like, setLike] = useState(likes)
     const heartIcon = useRef(null)
+    const userLiker = localStorage.getItem("userName")
+
+    const changeLike = async(state) => {
+        const req = await fetch("/api/cours", {
+            method:"PUT",
+            body: state ? JSON.stringify({
+                id:id,
+                likes:1,
+                userLiked:userLiker
+            }) : JSON.stringify({
+                id:id,
+                likes:0,
+                userLiked:userLiker
+            })
+        }).then(data => data.json())
+        .then(response => {
+            const likes = response.newData.likes
+            setLike(likes)
+            if (response.newData.userLiked?.includes(userLiker)) {
+                setLiked(true)
+            } else {
+                setLiked(false)
+            }
+        })
+    }
 
     useEffect(() => {
-        const changeLike = async(state) => {
-            const req = await fetch("/api/cours", {
-                method:"PUT",
-                body: state ? JSON.stringify({
-                    id:id,
-                    likes:1,
-                    userLiked:auth
-                }) : JSON.stringify({
-                    id:id,
-                    likes:-1,
-                    userLiked:auth
-                })
-            }).then(data => data.json())
+        const checkIfLiked = async() => {
+            const checkIfLiked = await fetch(`/api/cours?id=${id}`, {method:"GET"})
+            .then(data => data.json())
             .then(response => {
-                console.log(response);
+                if (response.userLiked?.includes(userLiker)) {
+                    setLiked(true)
+                }else {
+                    setLiked(false)
+                }
             })
         }
-        if (liked === false) {
+        checkIfLiked()
+        console.log("test");
+        
+    }, [])
+
+    useEffect(() => {
+        if (!liked) {
             heartIcon.current.style.color = "white"
-            
-            changeLike(false)
         }else {
             heartIcon.current.style.color = "red"
-            changeLike(true)
         }
     }, [liked])
 
@@ -41,7 +64,10 @@ const Cour = ({auth, time, title, description, id}) => {
     <div className='ml-auto mr-auto p-2 bg-gradient-to-t from-cyan-600 to-blue-500 w-3/4 sm:w-2/3 md:w-3/5 lg:w-4/6 h-80 rounded-xl relative border border-teal-400 m-2'>
         <div className='flex justify-between border-b border-slate-200 pt-2 pb-2 pr-2'>
             <h1 className="text-white text-xl font-semibold">{title}</h1>
-            <Heart className='cursor-pointer transition' ref={heartIcon} onClick={() => {setLiked(!liked)}}/>
+            <div className='flex flex-row justify-between items-center text-white'>
+                <Heart className='cursor-pointer transition ml-1 mr-1' ref={heartIcon} onClick={() => {changeLike(!liked)}}/>
+                <p className='ml-1 mr-1'>{like}</p>
+            </div>
         </div>
         <div className='bg-white rounded-xl mt-3 p-3 h-3/4'>
             <p>{description}</p>
