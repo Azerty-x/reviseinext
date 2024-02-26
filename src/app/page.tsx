@@ -14,10 +14,11 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      
       {isLoggedIn !== false ? (
         <div>
           <p>Salut {username} !</p>
+          <Link href={"/cours/add"}>Créez un cour</Link> <br />
+          <Link href={"/cours?p=1"}>Voir les cours</Link><br />
           <button onClick={logout}>Déconnexion</button>
         </div>
       ) : (

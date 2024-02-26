@@ -1,11 +1,16 @@
 "use client"
 
 import React, { useEffect, useState } from 'react'
+import Cour from './cour'
+import { Button } from './ui/button'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 const Cours = () => {
+    const router = useRouter()
+    const searchParams = useSearchParams()
+    const page = searchParams.get('p')
 
     const [coursList, setCours] = useState([])
-    const [page, setPage] = useState(1)
 
     useEffect(() => {
         const getCours = async() => {
@@ -20,11 +25,30 @@ const Cours = () => {
         getCours()
     }, [page])
 
+    const changePage = (state:boolean) => {
+        if (state === true) {
+            router.push(`/cours?p=${parseInt(page)-1}`)
+        }else {
+            router.push(`/cours?p=${parseInt(page)+1}`)
+        }
+    }
+
     return (
     <div>
-        {coursList.map((cours) => (
-            <p key={cours.id}>{cours.title}</p>
-        ))}
+        <div className='grid grid-cols-1 lg:grid-cols-2'>
+            {coursList.map((cours) => (
+                <Cour
+                key={cours.id}
+                auth={cours.author}
+                time={cours.createdAt}
+                title={cours.title}
+                description={cours.description}
+                ></Cour>
+            ))}
+        </div>
+        
+        <Button className='ml-auto' onClick={() => changePage(true)}>Précedent</Button>
+        <Button className='ml-auto' onClick={() => changePage(false)}>Suivant</Button>
     </div>
   )
 }

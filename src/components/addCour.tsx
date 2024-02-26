@@ -1,23 +1,16 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button } from './ui/button'
 import Link from 'next/link'
 import { useToast } from './ui/use-toast'
 import { Loader2 } from 'lucide-react'
-import Cour from './cour'
+import { useRouter } from 'next/navigation'
 
 const AddCour = () => {
-   
-    const formattedDate = `11/02/07`;
+    const router = useRouter()
     const isLoggedIn = localStorage.getItem('isLoggedIn')
     const [send, setSend] = useState({state:false, loading:false})
-    const [cour, setCour] = useState({
-        author: "",
-        title:"",
-        description:"",
-        content:""
-    })
     const {toast} = useToast()
 
     const handleSubmit = async(e) => {
@@ -42,12 +35,6 @@ const AddCour = () => {
         .then(response => {
             if (response.ok === "true") {
                 setSend({state:true,loading:false})
-                setCour({
-                    author:response.author,
-                    title:response.title,
-                    description:response.description,
-                    content:response.content
-                })
             } else {
                 setSend({state:false,loading:false})
                 toast({
@@ -57,6 +44,11 @@ const AddCour = () => {
             }
         })
     }
+    useEffect(() => {
+        if (send.state ===true) {
+            setTimeout(() => {router.push("/cours?p=1")},2000)
+        }
+    }, [send.state])
 
     return (
     <div>
@@ -78,15 +70,9 @@ const AddCour = () => {
                     </form>
                 ) : (
                     <div>
-                        <p>Cour ajouté avec succès!</p>
+                        <p>Vous allez être redirigé dans 5s...</p>
                     </div>
                 )}
-                <Cour 
-                title={cour.title} 
-                description={cour.description} 
-                auth={cour.author}
-                time={formattedDate}
-                />
             </>
         ) : (
             <p className='text-center text-2xl bg-black text-white m-20'>Merci de vous connecter <br />
