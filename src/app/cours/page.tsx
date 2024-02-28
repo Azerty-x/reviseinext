@@ -11,7 +11,6 @@ const Page = () => {
 
     return (
     <div>
-        <Link href={"/cours/add"}>Add cour</Link>
         <Cours></Cours>
     </div>
   )

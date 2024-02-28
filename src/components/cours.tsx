@@ -4,12 +4,13 @@ import React, { useEffect, useState } from 'react'
 import Cour from './cour'
 import { Button } from './ui/button'
 import { useRouter, useSearchParams } from 'next/navigation'
+import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from './ui/pagination'
 
 const Cours = () => {
     const router = useRouter()
     const searchParams = useSearchParams()
     const page = searchParams.get('p')
-
+    const username = localStorage.getItem("userName")
     const [coursList, setCours] = useState([])
     const [pageState, setPage] = useState(0)
 
@@ -26,12 +27,15 @@ const Cours = () => {
         }
         getCours()
     }, [page])
+    
+    
+    
     let pages = []
     for (let i = 1; i <= pageState ; i++) {
         pages.push(
-            <div key={i} onClick={() => {router.push(`/cours?p=${i}`)}} className='bg-black text-white text-xl p-3 rounded-lg cursor-pointer m-5 w-1/5'>
-                <p>Page {i}</p>
-            </div>
+            <PaginationItem key={i}>
+                <PaginationLink onClick={() => {router.push(`/cours?p=${i}`)}} className='cursor-pointer'>{i}</PaginationLink>
+            </PaginationItem>
         )
     }
 
@@ -59,13 +63,25 @@ const Cours = () => {
                 description={cours.description}
                 id={cours.id}
                 likes={cours.likes}
+                hasliked={cours.userLiked?.includes(username) ? true : false}
                 ></Cour>
             ))}
         </div>
         
-        <Button className='ml-auto' onClick={() => changePage(true)}>Précedent</Button>
-        {pages}
-        <Button className='ml-auto' onClick={() => changePage(false)}>Suivant</Button>
+        <Pagination className='p-5'>
+            <PaginationContent>
+                <PaginationItem>
+                    <PaginationPrevious className='cursor-pointer' onClick={() => changePage(true)}></PaginationPrevious>
+                </PaginationItem>
+                {pages}
+                <PaginationItem>
+                    <PaginationEllipsis></PaginationEllipsis>
+                </PaginationItem>
+                <PaginationItem>
+                    <PaginationNext className='cursor-pointer' onClick={() => changePage(false)}></PaginationNext>
+                </PaginationItem>
+            </PaginationContent>
+        </Pagination>
 
     </div>
   )

@@ -9,10 +9,10 @@ export async function GET(req, res){
 
     const pagesize = 10
 
-    const total = await prisma.cours.count()
-    
-    const skip = Math.max(0, (pages - 1) * pagesize)
+    const total = await prisma.cours.count();
     const totalPages = Math.ceil(total / pagesize);
+    const skip = (parseInt(pages) - 1) * pagesize;
+    console.log(skip);
     
 
     if (id !== null) {
@@ -22,16 +22,17 @@ export async function GET(req, res){
                     id:Number(id)
                 }
             })
-            return NextResponse.json(cours)
+            return NextResponse.json({cours, "ok":"true"})
         } catch (error) {
             return NextResponse.json({"error":error})
         }
     } else {
         const onePart = await prisma.cours.findMany({
-            skip:skip,
+            orderBy:{createdAt:"desc"},
+            skip,
             take:pagesize
         })
-        return NextResponse.json({"ok":"true", "pages":totalPages,"data":onePart.reverse()})
+        return NextResponse.json({"ok":"true", "pages":totalPages,"data":onePart})
     }
 }
 

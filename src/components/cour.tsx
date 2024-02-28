@@ -1,10 +1,10 @@
 "use client"
 
 import { Heart } from 'lucide-react'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import "@/app/globals.css"
 
-const Cour = ({auth, time, title, description, id, likes}) => {
+const Cour = ({auth, time, title, description, id, likes,hasliked }) => {
     const [liked, setLiked] = useState(false)
     const [like, setLike] = useState(likes)
     const heartIcon = useRef(null)
@@ -34,21 +34,8 @@ const Cour = ({auth, time, title, description, id, likes}) => {
         })
     }
 
-    useEffect(() => {
-        const checkIfLiked = async() => {
-            const checkIfLiked = await fetch(`/api/cours?id=${id}`, {method:"GET"})
-            .then(data => data.json())
-            .then(response => {
-                if (response.userLiked?.includes(userLiker)) {
-                    setLiked(true)
-                }else {
-                    setLiked(false)
-                }
-            })
-        }
-        checkIfLiked()
-        console.log("test");
-        
+    const load = useMemo(() => {
+        setLiked(hasliked)
     }, [])
 
     useEffect(() => {
@@ -60,7 +47,6 @@ const Cour = ({auth, time, title, description, id, likes}) => {
     }, [liked])
 
     return (
-    
     <div className='ml-auto mr-auto p-2 bg-gradient-to-t from-cyan-600 to-blue-500 w-3/4 sm:w-2/3 md:w-3/5 lg:w-4/6 h-80 rounded-xl relative border border-teal-400 m-2'>
         <div className='flex justify-between border-b border-slate-200 pt-2 pb-2 pr-2'>
             <h1 className="text-white text-xl font-semibold">{title}</h1>

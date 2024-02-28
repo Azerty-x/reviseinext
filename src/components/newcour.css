@@ -1,0 +1,21 @@
+.an {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.an-enter {
+    opacity: 0;
+}
+
+.an-enter-active {
+    opacity: 1;
+    transform: translateX(0px);
+}
+
+.an-exit {
+    opacity: 1;
+    transform: translateX(-1000px);
+}
+
+.an-exit-active {
+    opacity: 0;
+}

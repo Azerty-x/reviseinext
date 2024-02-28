@@ -1,4 +1,6 @@
 "use client"
+import Header from "@/components/header";
+import NewCour from "@/components/newCour";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -13,20 +15,23 @@ export default function Home() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      {isLoggedIn !== false ? (
-        <div>
-          <p>Salut {username} !</p>
-          <Link href={"/cours/add"}>Créez un cour</Link> <br />
-          <Link href={"/cours?p=1"}>Voir les cours</Link><br />
-          <button onClick={logout}>Déconnexion</button>
-        </div>
-      ) : (
-        <div>
-          <Link className="m-2" href={"/login"}>Connexion</Link>
-          <Link className="m-2" href={"/signup"}>Inscription</Link>
-        </div>
-      )}
+    <main className="/*flex min-h-screen flex-col items-center justify-between p-24*/">
+      <Header></Header>
+      <div 
+      style={{
+        backgroundImage: "url('/Gradient.png')",
+        backgroundSize: "cover",
+        width: "100%",
+        height: "337px",
+        zIndex: "-1",
+        position:"absolute",
+        top:0,
+        left:0
+    }}
+      ></div>
+      <div className="">
+        <NewCour></NewCour>
+      </div>
     </main>
   );
 }
