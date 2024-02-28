@@ -15,7 +15,7 @@ export default function Home() {
   }
 
   return (
-    <main className="/*flex min-h-screen flex-col items-center justify-between p-24*/">
+    <main >
       <Header></Header>
       <div 
       style={{
@@ -29,7 +29,7 @@ export default function Home() {
         left:0
     }}
       ></div>
-      <div className="">
+      <div className="m-20">
         <NewCour></NewCour>
       </div>
     </main>

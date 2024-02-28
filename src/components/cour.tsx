@@ -47,7 +47,7 @@ const Cour = ({auth, time, title, description, id, likes,hasliked }) => {
     }, [liked])
 
     return (
-    <div className='ml-auto mr-auto p-2 bg-gradient-to-t from-cyan-600 to-blue-500 w-3/4 sm:w-2/3 md:w-3/5 lg:w-4/6 h-80 rounded-xl relative border border-teal-400 m-2'>
+    <div className='ml-auto mr-auto p-2 bg-gradient-to-b from-[#4192DD] to-[#0C5D8A] w-3/4 sm:w-2/3 md:w-3/5 lg:w-4/6 h-80 rounded-xl relative border border-teal-400 m-2'>
         <div className='flex justify-between border-b border-slate-200 pt-2 pb-2 pr-2'>
             <h1 className="text-white text-xl font-semibold">{title}</h1>
             <div className='flex flex-row justify-between items-center text-white'>

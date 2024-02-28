@@ -38,7 +38,7 @@ export async function GET(req, res){
 
 export async function POST(req, res: NextResponse){
     const body = await req.json()
-    const { author, title, description, content, datetime, isLoggedIn } = body
+    const { author, title, description, content, datetime, isLoggedIn, category } = body
     if (isLoggedIn !== "true" || datetime === "0102") {
         return NextResponse.json({"error":"You are not allowed to make this request"})
     }else {
@@ -47,7 +47,8 @@ export async function POST(req, res: NextResponse){
                 author:author,
                 title:title,
                 description:description,
-                content:content
+                content:content,
+                category:category
             }
         })
         return NextResponse.json({"ok":"true", "createdElement": element})
@@ -64,7 +65,8 @@ export async function PUT(req, res) {
         likes = 0, 
         userLiked = undefined,
         isLoggedIn = "false", 
-        datetime = "21"
+        datetime = "21",
+        category
     } = body
     if (datetime === "21") {
         try {
@@ -77,7 +79,8 @@ export async function PUT(req, res) {
                 description: description || cour.description,
                 content: content || cour.content,
                 likes: newLikes,
-                userLiked: userLiked !== undefined ? likes === 0 ? cour.userLiked.filter(item => item !== userLiked) : [...cour.userLiked, userLiked] : cour.userLiked
+                userLiked: userLiked !== undefined ? likes === 0 ? cour.userLiked.filter(item => item !== userLiked) : [...cour.userLiked, userLiked] : cour.userLiked,
+                category: category || cour.category
             }
             const update = await prisma.cours.update({
                 where: {
@@ -108,7 +111,8 @@ export async function PUT(req, res) {
                         description:description,
                         content:content,
                         likes:Number(likes),
-                        userLiked:userLiked
+                        userLiked:userLiked,
+                        category:category
                     }
                 })
                 return NextResponse.json({"success": "Cours updated!", "old_data": cour, "new_data":updateCour})

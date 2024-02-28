@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
+import { ChakraProvider } from "@chakra-ui/react";
 
 
 export const metadata: Metadata = {
@@ -16,7 +17,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        {children}
+        <ChakraProvider>
+          {children}
+        </ChakraProvider>
         <Toaster/>
       </body>
     </html>
