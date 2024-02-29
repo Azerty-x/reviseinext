@@ -29,7 +29,7 @@ export default function Home() {
         left:0
     }}
       ></div>
-      <div className="m-20">
+      <div className="m-5 mt-[80px] lg:m-20">
         <NewCour></NewCour>
       </div>
     </main>
