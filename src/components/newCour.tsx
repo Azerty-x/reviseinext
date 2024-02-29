@@ -14,6 +14,7 @@ import {
     MenuList,
     MenuItem,
   } from '@chakra-ui/react'
+import SendView from './sendView'
 
 const NewCour = () => {
 
@@ -29,7 +30,7 @@ const NewCour = () => {
     const titleField = useRef(null)
     const descField = useRef(null)
     const menuField = useRef(null)
-    const [content, setContent] = useState("")
+    const [content, setContent] = useState("Le contenu qui fait plaisir")
     const searchParams = useSearchParams()
     const add = searchParams.get("add")
 
@@ -74,7 +75,6 @@ const NewCour = () => {
     }
 
     const handleChange = (e) => {
-        console.log(e.target.getContent());
         setContent(e.target.getContent())
     }
     const cancelOperation = () => {
@@ -88,7 +88,7 @@ const NewCour = () => {
     }
 
     const addNewCour = async() => {
-        
+        setIsFinished(true)
     }
 
     return (
@@ -108,84 +108,84 @@ const NewCour = () => {
                     initial={{y:0}}
                     exit="hideFirstPart"
                     
-                    className='flex flex-row ml-auto mr-auto w-3/4 bg-white p-4 shadow-md rounded font-kanit'>
-                    <div className='flex flex-col justify-center items-center w-2/4 text-left pr-1 pl-1 mr-1 border-r border-slate-200 overflow-hidden'>
+                    className='flex flex-col lg:flex-row ml-auto mr-auto w-full sm:w-5/6 lg:3/4 bg-white p-4 shadow-md rounded font-kanit'>
+                    <div className='flex flex-col justify-center items-center w-full lg:w-2/4 text-left pr-1 pl-1 mr-1 border-r border-slate-200 overflow-hidden'>
         
-                    <div className='grid grid-cols-3' ref={divElt}>
-                        <motion.div
-                            key="firstPart" 
-                            initial={{x: -1000}} 
-                            variants={variants}
-                            animate={nextPart === 1 ? "hide" : nextPart === 0 && "show"} 
-                            transition={{ease:"easeOut",duration:"0.3"}}
-                            className='w-[300%] mt-auto mb-auto'
-                            >
-                            <h1 className='text-2xl font-serrat font-semibold mb-10'>Entrez le titre de votre magnifique cours</h1>
-                            <label className='text-xl w-full text-left' htmlFor="title">Titre du cours</label>
-                            <Input ref={titleField} value={title} onChange={(e) => {setTitle(e.target.value)}} className='text-[1.1em] mb-auto' type="text" name='title' placeholder='La trigonométrie en 1ère spé' required/>
-                        </motion.div>
-                        <motion.div
-                            key="secondPart" 
-                            initial={{x: 1000}} 
-                            variants={variants}
-                            animate={nextPart === 0 ? "return" : nextPart === 1 ? "reshow" : nextPart === 2 && "hide"} 
-                            transition={{ease:"easeOut",duration:"0.3"}}
-                            className='w-[300%]'
-                            >
-                            <h1 className='text-2xl font-serrat font-semibold'>Décrivez votre cours pour qu&apos;il soit parfait</h1>
-                            <label className='text-xl w-full text-left'  htmlFor="desc">Description du cours</label>
-                            <Textarea ref={descField} value={description} onChange={(e) => {setDescription(e.target.value)}} className='text-[1.1em]' cols={50} rows={5} name='desc' placeholder='Ce cours vous explique comment appliquer les formules de trigo...' required/>
-                        </motion.div>
-                        <motion.div
-                            key="thirdPart" 
-                            initial={{x: 1000}} 
-                            variants={variants}
-                            animate={nextPart === 2 ? {
-                                x: -(divElt.current?.offsetWidth)/1.5 || 0,
-                                transition : {
-                                    ease: "easeOut",
-                                    duration: 0.15
-                                }
-                            } : nextPart === 1 && "return"} 
-                            transition={{ease:"easeOut",duration:"0.3"}}
-                            className='w-[300%]'
-                            >
-                            <h1 className='text-2xl font-serrat font-semibold'>Quelle catégorie pour ton cours ?</h1>
-                            <Menu>
-                                <MenuButton ref={menuField}
-                                    px={4}
-                                    py={2}
-                                    mt={5}
-                                    transition='all 0.2s'
-                                    borderRadius='md'
-                                    borderWidth='1px'
-                                    width="100%"
-                                    _hover={{ bg: 'gray.400' }}
-                                    _expanded={{ bg: 'gray.100' }}
-                                    _focus={{ boxShadow: 'outline' }}
-                                    textAlign={"left"}
-                                    position={"relative"}
+                        <div className='grid grid-cols-3' ref={divElt}>
+                            <motion.div
+                                key="firstPart" 
+                                initial={{x: -1000}} 
+                                variants={variants}
+                                animate={nextPart === 1 ? "hide" : nextPart === 0 && "show"} 
+                                transition={{ease:"easeOut",duration:"0.3"}}
+                                className='w-[300%] mt-auto mb-auto'
                                 >
-                                    {category} <ChevronDown className='absolute right-2 top-2' />
-                                </MenuButton>
-                                <MenuList className='h-[150px] overflow-auto w-[100%]'>
-                                    <MenuItem onClick={() => {setCategory("Mathématique")}} className='w-full'>Mathématique</MenuItem>
-                                    <MenuItem onClick={() => {setCategory("Physique-chimie")}} className='w-full'>Physique-chimie</MenuItem>
-                                    <MenuItem onClick={() => {setCategory("Histoire")}} className='w-full'>Histoire</MenuItem>
-                                    <MenuItem onClick={() => {setCategory("Géographie")}} className='w-full'>Géographie</MenuItem>
-                                    <MenuItem onClick={() => {setCategory("Education morale et civique")}} className='w-full'>Education morale et civique</MenuItem>
-                                    <MenuItem onClick={() => {setCategory("Français")}} className='w-full'>Français</MenuItem>
-                                    <MenuItem onClick={() => {setCategory("Anglais")}} className='w-full'>Anglais</MenuItem>
-                                    <MenuItem onClick={() => {setCategory("Allemand")}} className='w-full'>Allemand</MenuItem>
-                                    <MenuItem onClick={() => {setCategory("Espagnole")}} className='w-full'>Espagnole</MenuItem>
-                                    <MenuItem onClick={() => {setCategory("Informatique")}} className='w-full'>Informatique</MenuItem>
-                                    <MenuItem onClick={() => {setCategory("Design")}} className='w-full'>Design</MenuItem>
-                                    <MenuItem onClick={() => {setCategory("Svt")}} className='w-full'>Svt</MenuItem>
-                                    <MenuItem onClick={() => {setCategory("Autres")}} className='w-full'>Autres</MenuItem>
-                                </MenuList>
-                            </Menu>
-                        </motion.div>
-                    </div>
+                                <h1 className='text-2xl font-serrat font-semibold mb-10'>Entrez le titre de votre magnifique cours</h1>
+                                <label className='text-xl w-full text-left' htmlFor="title">Titre du cours</label>
+                                <Input ref={titleField} value={title} onChange={(e) => {setTitle(e.target.value)}} className='text-[1.1em] mb-auto' type="text" name='title' placeholder='La trigonométrie en 1ère spé' required/>
+                            </motion.div>
+                            <motion.div
+                                key="secondPart" 
+                                initial={{x: 1000}} 
+                                variants={variants}
+                                animate={nextPart === 0 ? "return" : nextPart === 1 ? "reshow" : nextPart === 2 && "hide"} 
+                                transition={{ease:"easeOut",duration:"0.3"}}
+                                className='w-[300%]'
+                                >
+                                <h1 className='text-2xl font-serrat font-semibold'>Décrivez votre cours pour qu&apos;il soit parfait</h1>
+                                <label className='text-xl w-full text-left'  htmlFor="desc">Description du cours</label>
+                                <Textarea ref={descField} value={description} onChange={(e) => {setDescription(e.target.value)}} className='text-[1.1em]' cols={50} rows={5} name='desc' placeholder='Ce cours vous explique comment appliquer les formules de trigo...' required/>
+                            </motion.div>
+                            <motion.div
+                                key="thirdPart" 
+                                initial={{x: 1000}} 
+                                variants={variants}
+                                animate={nextPart === 2 ? {
+                                    x: -(divElt.current?.offsetWidth)/1.5 || 0,
+                                    transition : {
+                                        ease: "easeOut",
+                                        duration: 0.15
+                                    }
+                                } : nextPart === 1 && "return"} 
+                                transition={{ease:"easeOut",duration:"0.3"}}
+                                className='w-[300%]'
+                                >
+                                <h1 className='text-2xl font-serrat font-semibold'>Quelle catégorie pour ton cours ?</h1>
+                                <Menu>
+                                    <MenuButton ref={menuField}
+                                        px={4}
+                                        py={2}
+                                        mt={5}
+                                        transition='all 0.2s'
+                                        borderRadius='md'
+                                        borderWidth='1px'
+                                        width="100%"
+                                        _hover={{ bg: 'gray.400' }}
+                                        _expanded={{ bg: 'gray.100' }}
+                                        _focus={{ boxShadow: 'outline' }}
+                                        textAlign={"left"}
+                                        position={"relative"}
+                                    >
+                                        {category} <ChevronDown className='absolute right-2 top-2' />
+                                    </MenuButton>
+                                    <MenuList className='h-[150px] overflow-auto w-[100%]'>
+                                        <MenuItem onClick={() => {setCategory("Mathématique")}} className='w-full'>Mathématique</MenuItem>
+                                        <MenuItem onClick={() => {setCategory("Physique-chimie")}} className='w-full'>Physique-chimie</MenuItem>
+                                        <MenuItem onClick={() => {setCategory("Histoire")}} className='w-full'>Histoire</MenuItem>
+                                        <MenuItem onClick={() => {setCategory("Géographie")}} className='w-full'>Géographie</MenuItem>
+                                        <MenuItem onClick={() => {setCategory("Education morale et civique")}} className='w-full'>Education morale et civique</MenuItem>
+                                        <MenuItem onClick={() => {setCategory("Français")}} className='w-full'>Français</MenuItem>
+                                        <MenuItem onClick={() => {setCategory("Anglais")}} className='w-full'>Anglais</MenuItem>
+                                        <MenuItem onClick={() => {setCategory("Allemand")}} className='w-full'>Allemand</MenuItem>
+                                        <MenuItem onClick={() => {setCategory("Espagnole")}} className='w-full'>Espagnole</MenuItem>
+                                        <MenuItem onClick={() => {setCategory("Informatique")}} className='w-full'>Informatique</MenuItem>
+                                        <MenuItem onClick={() => {setCategory("Design")}} className='w-full'>Design</MenuItem>
+                                        <MenuItem onClick={() => {setCategory("Svt")}} className='w-full'>Svt</MenuItem>
+                                        <MenuItem onClick={() => {setCategory("Autres")}} className='w-full'>Autres</MenuItem>
+                                    </MenuList>
+                                </Menu>
+                            </motion.div>
+                        </div>
         
                         <div className='flex flex-row justify-end items-center mt-auto w-full'>
                             <AnimatePresence>
@@ -229,7 +229,7 @@ const NewCour = () => {
                             }}>Suivant <ArrowRightSquare className='mr-2 ml-2' /></Button>
                         </div>
                     </div>
-                    <div className='ml-auto mr-auto p-2 bg-gradient-to-b from-[#4192DD] to-[#0C5D8A] w-3/4 sm:w-2/3 md:w-3/5 lg:w-2/4 h-80 rounded-xl relative border border-teal-400 m-2 '>
+                    <div className='ml-auto mr-auto p-2 bg-gradient-to-b from-[#4192DD] to-[#0C5D8A] w-full lg:w-2/4 h-80 rounded-xl relative border border-teal-400 m-2 '>
                         <div className='flex justify-between border-b border-slate-200 pt-2 pb-2 pr-2'>
                             <h1 className="text-white text-xl font-normal">{title}</h1>
                             <div className='flex flex-row justify-between items-center text-white'>
@@ -252,7 +252,7 @@ const NewCour = () => {
                         initial={{y:2000}}
                         animate={{y:0}}
                         exit={{x:1000}}
-                        className='w-3/4 ml-auto mr-auto'
+                        className='w-full lg:w-3/4 ml-auto mr-auto'
                         >   
                             <h1 className='text-center text-[1.9em] m-5 text-white font-bold'>Rédaction</h1>
                             <Editor
@@ -272,7 +272,7 @@ const NewCour = () => {
                                   'removeformat | help',
                                 content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
                               }}
-                            initialValue="Le cour de l'admin : comment faire un magnifique cour ?"
+                            initialValue={"Le cour de l'admin : comment faire un magnifique cour ?"}
                             />
                             <div className='flex flex-row justify-end'>
                                 <Button onClick={cancelOperation} variant={"destructive"} className='text-[1.1em] m-2 pl-1' >
@@ -281,16 +281,25 @@ const NewCour = () => {
                                 </Button>
                                 <Button variant={"success"} className='text-[1.1em] m-2 pl-1' onClick={addNewCour}>
                                     <CheckSquare2 className='mr-2 ml-2' />
-                                    Terminé
+                                    Validez
                                 </Button>
                             </div>
                         </motion.div>
                     )}
                 </AnimatePresence>
-                <div dangerouslySetInnerHTML={{__html:content}}></div>
             </div>
             )}
         </motion.div>
+        {isFinished && (
+            <SendView
+            auth={auth}
+            title={title}
+            description={description}
+            content={content}
+            category={category}
+            date= {time}
+            ></SendView>
+        )}
     </AnimatePresence>
   )
 }
