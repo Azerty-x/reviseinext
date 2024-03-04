@@ -48,7 +48,8 @@ const config = {
       },
       fontFamily :  {
         kanit:["Kanit"],
-        serrat:["Montserrat"]
+        serrat:["Montserrat"],
+        flow:["Flow Circular"]
       }
     },
   },
