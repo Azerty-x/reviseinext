@@ -1,9 +1,10 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useToast } from './ui/use-toast';
+import { Button, FormControl, FormHelperText, FormLabel, Input } from '@chakra-ui/react';
 
 
 
@@ -17,6 +18,10 @@ export default function LoginForm() {
   const { toast } = useToast()
   
   const router = useRouter()
+  if (isLoggedIn === "true") {
+    router.push("/")
+  }
+
   
   const handleSubmit = async(e) => {
     e.preventDefault()
@@ -41,18 +46,18 @@ export default function LoginForm() {
   }
 
 
-
   return (
-    <div>
-        {isLoggedIn !== "true" ? (
-            <form onSubmit={handleSubmit}>
-                <input className='border-2 m-2' type="text" onChange={(e) => {setFormData({"username": e.target.value, "password": formData.password})}} value={formData.username}/>
-                <input className='border-2 m-2' type="password" onChange={(e) => {setFormData({"username": formData.username, "password": e.target.value})}} value={formData.password}/>
-                <input className='cursor-pointer border-2 p-2 pl-5 pr-5 rounded hover:bg-[#234592] transition' type="submit" value="Sub" />
-            </form>
-        ) : (router.push("/"))}
-
-        <Link href={"/signup"}>Inscription</Link>
+    <div className='w-2/5 p-5 mr-auto ml-auto shadow-[0_0_5px_1px_rgba(0,0,0,0.25)] rounded-lg bg-white mt-[8rem]'>
+        <h1 className='text-center text-2xl font-bold mb-5'>Connexion</h1>
+        <FormControl className='flex flex-col'>
+            <FormLabel>Nom d&apos;utilisateur</FormLabel>
+            <Input onChange={(e) => {setFormData({"username": e.target.value, "password": formData.password})}} value={formData.username} type='text' placeholder='Patrick256'/>
+            <FormLabel>Mot de passe</FormLabel>
+            <Input onChange={(e) => {setFormData({"username": formData.username, "password": e.target.value})}} value={formData.password} type='password' placeholder='********'/>
+            <FormHelperText>Votre mot de passe est irrécupérable</FormHelperText>
+            <FormHelperText>Pas encore de compte ? <Link className='text-[#1710e3] underline hover:decoration-2' href={"/signup"}>Inscrivez vous</Link></FormHelperText>
+            <Button className='ml-auto mr-auto mt-5' colorScheme='green' onClick={handleSubmit}>Se connecter</Button>
+        </FormControl>
     </div>
   )
 }
