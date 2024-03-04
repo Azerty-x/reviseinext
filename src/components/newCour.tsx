@@ -108,7 +108,7 @@ const NewCour = () => {
                     initial={{y:0}}
                     exit="hideFirstPart"
                     
-                    className='flex flex-col lg:flex-row ml-auto mr-auto w-full sm:w-5/6 lg:3/4 bg-white p-4 shadow-md rounded font-kanit'>
+                    className='flex flex-col lg:flex-row ml-auto mr-auto w-full sm:w-5/6 lg:3/4 bg-white p-4 shadow-[0_0_5px_0_rgba(0,0,0,0.25)] rounded font-kanit'>
                     <div className='flex flex-col justify-center items-center w-full lg:w-2/4 text-left pr-1 pl-1 mr-1 border-r border-slate-200 overflow-hidden'>
         
                         <div className='grid grid-cols-3' ref={divElt}>
