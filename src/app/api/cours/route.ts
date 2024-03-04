@@ -5,7 +5,7 @@ export async function GET(req, res){
     const searchParams = req.nextUrl.searchParams
     
     const id = searchParams.get("id")
-    const pages = searchParams.get("p") || 1
+    const pages = searchParams.get("p")
 
     const pagesize = 10
 
