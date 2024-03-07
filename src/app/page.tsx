@@ -45,7 +45,7 @@ export default function Home() {
                 </div>
             </div>
             <div className='bg-white rounded-xl mt-3 p-3 h-3/4'>
-                <p className="font-flow text-black">Si tu trouve ce secret, met a l&apos;inscription dans ton pseudo [#] avec le code hex d'une couleur pour avoir un pseudo stylisé</p>
+                <p className="font-flow text-black">Si tu trouve ce secret, met a l&apos;inscription dans ton pseudo [#] avec le code hex d&apos;une couleur pour avoir un pseudo stylisé</p>
             </div>
             <p className='text-slate-200 font-flow'>Par Admin Le 02/03/24</p>
           </div>

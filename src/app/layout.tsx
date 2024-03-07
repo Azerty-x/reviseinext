@@ -5,8 +5,8 @@ import { ChakraProvider } from "@chakra-ui/react";
 
 
 export const metadata: Metadata = {
-  title: "Rev",
-  description: "LE site pour Rev",
+  title: "Révise",
+  description: "LE site pour Réviser",
 };
 
 export default function RootLayout({
