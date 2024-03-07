@@ -12,8 +12,6 @@ export async function GET(req, res){
     const total = await prisma.cours.count();
     const totalPages = Math.ceil(total / pagesize);
     const skip = (parseInt(pages) - 1) * pagesize;
-    console.log(skip);
-    
 
     if (id !== null) {
         try {

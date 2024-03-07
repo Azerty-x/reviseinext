@@ -14,7 +14,7 @@ const Page = () => {
   const courId = searchParams.get("cour")
   const [data, setData] = useState(undefined)
   const [loading, setLoading] = useState(true)
-
+  
 
   useEffect(() => {
     if (courId) {
@@ -31,7 +31,7 @@ const Page = () => {
       }
       getCourById()
     }
-  }, [])
+  }, [courId])
 
   return (
     <div>
@@ -48,6 +48,10 @@ const Page = () => {
         left:0
     }}
       ></div>
+      <div className='font-serrat mt-[5.5em] w-5/6 ml-auto mr-auto'>
+        <h1 className='text-[2.5em] font-semibold'>Cherche les cours de ton choix</h1>
+        <p className='text-[1.2em] font-medium '>Révise les cours écrit par la communauté pour la communauté</p>
+      </div>
       {courId ? (
         <>
             {loading && (
