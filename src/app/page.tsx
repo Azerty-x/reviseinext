@@ -2,6 +2,7 @@
 import Header from "@/components/header";
 import NewCour from "@/components/newCour";
 import { Heart } from "lucide-react";
+import { Suspense } from "react";
 
 export default function Home() {
 
@@ -47,7 +48,9 @@ export default function Home() {
         </div>
       </div>
       <div className="m-5 mt-[80px] lg:m-20">
-        <NewCour></NewCour>
+        <Suspense fallback={<>Loading...</>}>
+          <NewCour></NewCour>
+        </Suspense>
       </div>
     </main>
   );

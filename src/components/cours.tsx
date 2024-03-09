@@ -7,7 +7,6 @@ import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, Pagi
 import { Menu, MenuButton, MenuItem, MenuList, SkeletonCircle, SkeletonText } from '@chakra-ui/react'
 import {Input} from './ui/input'
 import { ChevronDown } from 'lucide-react'
-import { Separator } from '@radix-ui/react-dropdown-menu'
 
 const Cours = () => {
     const router = useRouter()

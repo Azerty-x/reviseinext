@@ -5,7 +5,8 @@ import ViewCour from '@/components/viewCour'
 import { AnimatePresence, backIn, motion } from 'framer-motion'
 import { Loader2 } from 'lucide-react'
 import { useSearchParams } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
+import React, { Suspense, useEffect, useState } from 'react'
+
 
 const Page = () => {
 
@@ -35,6 +36,7 @@ const Page = () => {
   return (
     <div>
       <Header></Header>
+      
       <div
       style={{
         backgroundImage: "url('/Gradient.png')",
@@ -76,7 +78,9 @@ const Page = () => {
         )}
         </>
       ) : (
-        <Cours></Cours>
+        <Suspense fallback={<>Loading...</>}>
+          <Cours></Cours>
+        </Suspense>
       )}
     </div>
   )
