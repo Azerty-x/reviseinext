@@ -65,14 +65,16 @@ const Page = () => {
             animate={{y:0}}
             exit={{y:-1000, transition:{ease:backIn}}}
             >
-              <ViewCour 
-            auth={data.author}
-            title={data.title}
-            description={data.description} 
-            content={data.content}
-            date={data.createdAt}
-            preview={false}
-            />
+              <Suspense fallback={<>Loading...</>}>
+                <ViewCour 
+              auth={data.author}
+              title={data.title}
+              description={data.description} 
+              content={data.content}
+              date={data.createdAt}
+              preview={false}
+              />
+              </Suspense>
             </motion.div>
           </AnimatePresence>
         )}
