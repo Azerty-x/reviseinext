@@ -2,8 +2,6 @@
 import Header from "@/components/header";
 import NewCour from "@/components/newCour";
 import { Heart } from "lucide-react";
-import Link from "next/link";
-import { useState } from "react";
 
 export default function Home() {
 

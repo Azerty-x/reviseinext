@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import "@/app/styles/header.css"
+import "@/styles/header.css"
 import Link from 'next/link';
 import { Button } from './ui/button';
 

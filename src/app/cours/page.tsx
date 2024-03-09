@@ -4,7 +4,6 @@ import Header from '@/components/header'
 import ViewCour from '@/components/viewCour'
 import { AnimatePresence, backIn, motion } from 'framer-motion'
 import { Loader2 } from 'lucide-react'
-import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
