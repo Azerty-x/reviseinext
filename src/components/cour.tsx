@@ -12,7 +12,7 @@ const Cour = ({auth, time, title, description, id, likes,hasliked }) => {
     const [liked, setLiked] = useState(false)
     const [like, setLike] = useState(likes)
     const heartIcon = useRef(null)
-    const userLiker = localStorage.getItem("userName")
+    const [userLiker, setUser] = useState("")
     const [goto, setGoto] = useState(false)
 
     const changeLike = async(state) => {
@@ -44,6 +44,7 @@ const Cour = ({auth, time, title, description, id, likes,hasliked }) => {
     }, [])
 
     useEffect(() => {
+        setUser(`${localStorage.getItem("userName")}`)
         if (!liked) {
             heartIcon.current.style.color = "white"
         }else {

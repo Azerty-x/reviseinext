@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useToast } from './ui/use-toast'
 import { Button } from './ui/button'
 import { Check, Loader2Icon } from 'lucide-react'
@@ -8,8 +8,12 @@ const SendView = ({auth, title, description, content, category, date}) => {
     
     const [isSend, setSend] = useState({send:false, loading:false})
     const [data, setData] = useState(null)
+    const [isLoggedIn, setLog] = useState("false")
     const { toast } = useToast()
 
+    useEffect(() => {
+        setLog(`${localStorage.getItem("isLoggedIn")}`)
+    }, [])
 
     const sendCour = async() => {
         setSend({send:isSend.send, loading:true})
@@ -20,7 +24,7 @@ const SendView = ({auth, title, description, content, category, date}) => {
                 title:title,
                 description:description,
                 content:content, 
-                isLoggedIn:localStorage.getItem("isLoggedIn"), 
+                isLoggedIn:isLoggedIn, 
                 datetime:"010",
                 category:category
             })

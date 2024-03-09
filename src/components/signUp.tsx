@@ -1,17 +1,16 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useToast } from './ui/use-toast'
 import Link from 'next/link'
 import { Button, FormControl, FormHelperText, FormLabel, Input } from '@chakra-ui/react'
 
 const SignUpForm = () => {
-    const isLoggedIn = localStorage.getItem("isLoggedIn")
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const router = useRouter()
     const { toast } = useToast()
-    
+
     const handleSubmit = async(e) => {
         e.preventDefault()
         const res = await fetch('/api/signup', {
@@ -20,9 +19,11 @@ const SignUpForm = () => {
             body: JSON.stringify({ username, password })
         }).then(data => data.json()).then(response => {
             if (response.isLoggedIn === true) {
-                localStorage.setItem("userId", response.id)
-                localStorage.setItem("userName", response.username)
-                localStorage.setItem("isLoggedIn", response.isLoggedIn)
+                if (typeof window !== 'undefined') {
+                    localStorage.setItem("userId", response.id)
+                    localStorage.setItem("userName", response.username)
+                    localStorage.setItem("isLoggedIn", response.isLoggedIn)
+                  }
                 router.push("/")
             } else if (response === "user already exist") {
                 toast({

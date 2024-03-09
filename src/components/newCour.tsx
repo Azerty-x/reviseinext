@@ -1,6 +1,6 @@
 "use client"
 import { ArrowRightSquare, CheckSquare2, ChevronDown, Heart, Undo2, XSquare } from 'lucide-react'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Input } from './ui/input'
 import { Textarea } from './ui/textarea'
 import { Button } from './ui/button'
@@ -22,7 +22,7 @@ const NewCour = () => {
     const [description, setDescription] = useState("Ce cours vous explique comment appliquer les formules de trigo...")
     const [category, setCategory] = useState("Catégorie")
     const time = new Date().toLocaleDateString()
-    const auth = localStorage.getItem("userName")
+    const [auth, setAuth] = useState("")
     const [nextPart, setPart] = useState(0)
     const [displayEditor, setDisplayEditor] = useState(false)
     const [isFinished, setIsFinished] = useState(false)
@@ -90,6 +90,9 @@ const NewCour = () => {
     const addNewCour = async() => {
         setIsFinished(true)
     }
+    useEffect(() => {
+        setAuth(`${localStorage.getItem("userName")}`)
+    },[])
 
     return (
     <AnimatePresence>

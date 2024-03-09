@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation'
 
 const AddCour = () => {
     const router = useRouter()
-    const isLoggedIn = localStorage.getItem('isLoggedIn')
+    const [isLoggedIn,setLog] = useState("false")
     const [send, setSend] = useState({state:false, loading:false})
     const {toast} = useToast()
 
@@ -45,6 +45,7 @@ const AddCour = () => {
         })
     }
     useEffect(() => {
+        setLog(`${localStorage.getItem('isLoggedIn')}`)
         if (send.state ===true) {
             setTimeout(() => {router.push("/cours?p=1")},2000)
         }

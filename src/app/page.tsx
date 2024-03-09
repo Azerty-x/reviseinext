@@ -7,12 +7,9 @@ import { useState } from "react";
 
 export default function Home() {
 
-  const [isLoggedIn, setLogged] = useState(Boolean(localStorage.getItem("isLoggedIn")))
-  const username = localStorage.getItem("userName")
 
   const logout = () => {
     localStorage.clear()
-    setLogged(false)
   }
 
   return (

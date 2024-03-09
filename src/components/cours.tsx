@@ -13,13 +13,14 @@ const Cours = () => {
     const router = useRouter()
     const searchParams = useSearchParams()
     const page = searchParams.get('p')
-    const username = localStorage.getItem("userName")
+    const [username, setUsername] = useState("")
     const [coursList, setCours] = useState([])
     const [pageState, setPage] = useState(0)
     const [category, setCategory] = useState("Filtre")
     const [onError, setError] = useState(false)
 
     useEffect(() => {
+        setUsername(`${localStorage.getItem("userName")}`)
         const getCours = async() => {
             const cours = await fetch(`/api/cours?p=${page}`, {
                 method:"GET"

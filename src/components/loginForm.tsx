@@ -14,13 +14,16 @@ export default function LoginForm() {
     "username": "",
     "password": ""
   })
-  const isLoggedIn = localStorage.getItem("isLoggedIn")
+  const [isLoggedIn, setLog] = useState("false")
   const { toast } = useToast()
   
   const router = useRouter()
   if (isLoggedIn === "true") {
     router.push("/")
   }
+  useEffect(() => {
+    setLog(`${localStorage.getItem("isLoggedIn")}`)
+  }, [])
 
   
   const handleSubmit = async(e) => {

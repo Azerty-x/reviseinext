@@ -1,13 +1,16 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import "@/app/styles/header.css"
 import Link from 'next/link';
 import { Button } from './ui/button';
 
 const Header = () => {
-    const isLoggedIn = Boolean(localStorage.getItem("isLoggedIn"))
+    const [isLoggedIn, setLog] = useState(false)
     const [btnValue, setValue] = useState("Créez")
 
+    useEffect(() => {
+        setLog(Boolean(localStorage.getItem("isLoggedIn")))
+    }, [])
 
     const checkIfLogged = () => {
         setValue("Connecté vous d'abord!")
